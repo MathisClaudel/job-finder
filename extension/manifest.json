@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Job Finder — remplissage de candidatures",
+  "version": "1.0.0",
+  "description": "Remplit les formulaires de candidature a partir de profil.yaml. Declenchement manuel uniquement.",
+  "permissions": ["activeTab", "scripting", "storage", "webNavigation"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Remplir cette candidature"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["profil-genere.js", "content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

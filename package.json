@@ -1,0 +1,23 @@
+{
+  "name": "job-finder",
+  "version": "1.0.0",
+  "description": "Systeme de recherche d'emploi : agregation multi-sources, scoring, autofill ATS et lettres de motivation",
+  "type": "module",
+  "bin": {
+    "jf": "./src/cli.js"
+  },
+  "scripts": {
+    "search": "node src/cli.js search",
+    "list": "node src/cli.js list",
+    "show": "node src/cli.js show",
+    "status": "node src/cli.js status",
+    "report": "node src/cli.js report",
+    "build:extension": "node src/build-extension.js"
+  },
+  "dependencies": {
+    "yaml": "^2.5.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

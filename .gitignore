@@ -1,0 +1,22 @@
+# ─── Secrets ───────────────────────────────────────────────────────
+.env
+.env.local
+
+# ─── Donnees personnelles ──────────────────────────────────────────
+# Le profil reel, les anecdotes et les reponses ATS ne sont jamais
+# versionnes : seuls les gabarits *.example.yaml le sont.
+profil/*.yaml
+!profil/*.example.yaml
+extension/profil-genere.js
+
+# Lettres generees : elles contiennent le nom et le parcours.
+lettres/*
+!lettres/.gitkeep
+
+# Base d'offres et rapport : contiennent le profil via le scoring.
+data/
+
+# ─── Dependances et divers ─────────────────────────────────────────
+node_modules/
+*.log
+.DS_Store

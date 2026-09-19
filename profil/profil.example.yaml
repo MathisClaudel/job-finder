@@ -1,0 +1,106 @@
+# ═══════════════════════════════════════════════════════════════════
+#  PROFIL — gabarit
+#
+#  Copier ce fichier en `profil/profil.yaml` et le remplir.
+#  `profil/profil.yaml` est ignore par git : aucune donnee personnelle
+#  ne part dans le depot.
+#
+#  Ce fichier est la source de verite unique : il alimente l'autofill
+#  ATS, la generation de lettres et le scoring des offres.
+# ═══════════════════════════════════════════════════════════════════
+
+identite:
+  prenom: Prenom
+  nom: Nom
+  email_perso: prenom.nom@example.com
+  telephone: "+33 6 00 00 00 00"             # format international
+  linkedin: www.linkedin.com/in/identifiant
+  github: ""
+  portfolio: ""
+  adresse_actuelle: "1 rue Exemple, 00000 Ville, France"
+  deja_installe_ville_cible: true            # argument fort : pas de relocalisation a negocier
+  permis_b: false
+  vehicule: false
+  transports: "Moyen d'acces au bassin d'emploi vise"
+  nationalite: Francaise
+  autorisation_travail_ue: true
+
+recherche:
+  statut: "En recherche active"
+  type_contrat: [CDI]
+  intitules_vises:
+    - Ingenieur IA
+    - AI Engineer
+    - Developpeur .NET / C#
+    - Data engineer
+  localisation:
+    presentiel:
+      ville_cible: Ville                     # utilisee telle quelle par Adzuna et l'affichage
+      code_insee: "00000"                    # requis par l'API France Travail pour le rayon geographique
+      departement: "00"
+      rayon_km: 40
+      # Communes reconnues comme "sur zone" lors du scoring d'une offre.
+      # Les accents sont facultatifs : les deux formes sont generees.
+      villes_incluses: [Ville, Commune-voisine, Autre-commune]
+    remote:
+      accepte_full_remote: true
+      zone: "Monde entier"
+      fuseaux_acceptes: "UTC-3 a UTC+3"
+  disponibilite: "Immediate"
+  salaire:
+    brut_annuel_cible: 40000
+    brut_annuel_plancher: 37000
+    devise: EUR
+  mobilite_deplacements: "Deplacements ponctuels acceptes"
+
+formation:
+  - diplome: Intitule du diplome
+    etablissement: Etablissement
+    ville: Ville
+    annee_obtention: 2026
+    niveau_rncp: 7
+    mention: ""
+    memoire: "Sujet du memoire"
+    matieres_cles: [Genie logiciel, Bases de donnees, Machine Learning]
+
+experiences:
+  - poste: Intitule du poste
+    entreprise: Entreprise
+    secteur: Secteur
+    ville: Ville
+    debut: "2024-09"
+    fin: "2026-08"
+    contrat: Alternance
+    technologies: [C#, .NET, SQL Server]
+    missions:
+      - "Ce qui a ete fait, avec le resultat mesurable quand il existe."
+
+competences:
+  langages: [C#, TypeScript, Python, SQL]
+  frameworks: [.NET, React, Node.js]
+  ia: [LLM, RAG, agents]
+  outils: [Git, Docker, CI/CD]
+  methodes: [Agile, Scrum, TDD]
+
+projets_personnels:
+  - nom: Nom du projet
+    description: "Ce que le projet fait et pourquoi il a ete construit."
+    technologies: [Node.js]
+    url: ""
+
+certifications:
+  - nom: Intitule
+    organisme: Organisme
+    annee: 2025
+
+langues:
+  - langue: Francais
+    niveau: Langue maternelle
+  - langue: Anglais
+    niveau: C1
+
+engagements:
+  - "Engagement associatif ou benevole, s'il eclaire le profil."
+
+qualites: [Curieux, Perseverant, Esprit d'equipe]
+hobbies: [Hobby, Autre hobby]

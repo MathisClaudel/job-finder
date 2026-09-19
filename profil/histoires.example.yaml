@@ -1,0 +1,57 @@
+# ═══════════════════════════════════════════════════════════════════
+#  HISTOIRES — gabarit
+#
+#  Copier en `profil/histoires.yaml` (ignore par git) et remplacer
+#  l'exemple par ses propres anecdotes.
+#
+#  C'est CE fichier qui rend les lettres credibles. Une lettre generee
+#  DOIT citer une histoire concrete d'ici, jamais un adjectif creux
+#  ("dynamique", "passionne", "force de proposition").
+#
+#  Format STAR : situation / tache / action / resultat.
+#  `tags`  = sert au matching automatique avec l'offre.
+#  `angle` = comment l'histoire se raccroche a un besoin employeur.
+#  `poids` = 1 a 5 ; 5 = histoire signature, a privilegier.
+#
+#  Regle absolue : tout doit etre factuel et defendable en entretien.
+# ═══════════════════════════════════════════════════════════════════
+
+histoires:
+
+  - id: identifiant-en-kebab-case
+    titre: "Une phrase qui dit le probleme resolu, pas le poste occupe"
+    tags: [mot-cle, techno, competence-transverse]
+    poids: 3
+    situation: >
+      Le contexte de depart, en deux phrases : ou, quand, quel etat des lieux.
+      Assez precis pour qu'un recruteur puisse poser une question dessus.
+    tache: >
+      Ce qu'il fallait obtenir, et pourquoi ce n'etait pas evident.
+    action: >
+      Ce qui a ete fait concretement, a la premiere personne. Les decisions
+      prises comptent plus que les technologies citees.
+    resultat: >
+      Le resultat, chiffre quand c'est possible. Un chiffre verifiable vaut
+      mieux qu'un superlatif.
+    angle: >
+      A quel besoin employeur cette histoire repond, et pour quel type de poste
+      la ressortir.
+
+# ─── Regles de redaction, appliquees a toute lettre generee ─────────
+interdits:
+  formules:
+    - "C'est avec un grand interet que..."
+    - "Votre entreprise, leader dans son domaine..."
+    - "Je serais ravi de mettre mes competences au service de..."
+    - "Dynamique, motive et rigoureux"
+    - "Ma formation m'a permis d'acquerir de solides competences"
+    - "Je reste a votre entiere disposition pour un entretien"
+    - "Dans l'attente d'une reponse de votre part"
+    - "N'hesitez pas a me contacter"
+  principes:
+    - Jamais d'adjectif sur soi sans une preuve factuelle dans la phrase suivante
+    - Jamais plus d'un point d'exclamation (idealement zero)
+    - Jamais de tiret cadratin en rafale, ni de listes a puces dans le corps de la lettre
+    - Ne jamais reciter le CV : la lettre dit ce que le CV ne peut pas dire
+    - Une seule accroche, concrete, des la premiere phrase — pas de mise en contexte
+    - Si l'entreprise est inconnue, ne pas inventer de flatterie : parler du poste

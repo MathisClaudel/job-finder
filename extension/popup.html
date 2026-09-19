@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Job Finder</title>
+<style>
+  :root { color-scheme: light dark; --fond:#fbfbfa; --carte:#fff; --texte:#1d1c1a; --doux:#6b6862;
+          --trait:#e6e3dd; --accent:#2a5ca8; --vert:#1a7f5a; --jaune:#a3701a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fond:#1a1a1e; --carte:#232328; --texte:#eceae6; --doux:#9b978f;
+            --trait:#34343c; --accent:#7aa7e8; --vert:#4fc99a; --jaune:#e0b055; }
+  }
+  * { box-sizing: border-box; }
+  body { width:380px; margin:0; padding:14px; background:var(--fond); color:var(--texte);
+         font:13.5px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  h1 { font-size:.95rem; margin:0 0 2px; }
+  .sous { color:var(--doux); font-size:.78rem; margin:0 0 12px; }
+  button { font:inherit; width:100%; padding:10px; border-radius:8px; border:none; cursor:pointer;
+           background:var(--accent); color:#fff; font-weight:600; }
+  button:hover { filter:brightness(1.08); }
+  button.secondaire { background:var(--carte); color:var(--texte); border:1px solid var(--trait); font-weight:500; margin-top:6px; }
+  label.case { display:flex; align-items:center; gap:7px; font-size:.8rem; color:var(--doux);
+               margin:9px 0; cursor:pointer; }
+  label.case input { width:auto; margin:0; }
+  details { margin-top:12px; border-top:1px solid var(--trait); padding-top:10px; }
+  summary { cursor:pointer; font-size:.82rem; color:var(--doux); user-select:none; }
+  textarea { width:100%; min-height:88px; margin-top:8px; padding:8px; border-radius:7px;
+             border:1px solid var(--trait); background:var(--carte); color:var(--texte);
+             font:inherit; font-size:.8rem; resize:vertical; }
+  #resultat { margin-top:12px; padding:10px; border-radius:8px; background:var(--carte);
+              border:1px solid var(--trait); font-size:.8rem; display:none; }
+  #resultat.visible { display:block; }
+  #resultat .titre { font-weight:600; color:var(--vert); margin-bottom:6px; }
+  #resultat ul { margin:0; padding-left:16px; color:var(--doux); }
+  #resultat .alerte { color:var(--jaune); margin-top:8px; }
+  .champs { margin-top:8px; display:grid; gap:3px; }
+  .champs button { display:flex; justify-content:space-between; gap:8px; text-align:left;
+                   background:var(--carte); color:var(--texte); border:1px solid var(--trait);
+                   font-weight:400; font-size:.78rem; padding:6px 8px; }
+  .champs .cle { color:var(--doux); flex:0 0 96px; }
+  .champs .val { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+</style>
+</head>
+<body>
+  <h1>Remplir cette candidature</h1>
+  <p class="sous">Relis toujours avant d'envoyer. L'extension ne soumet jamais le formulaire.</p>
+
+  <button id="remplir">Remplir le formulaire</button>
+  <label class="case"><input type="checkbox" id="ecraser"> Écraser aussi les champs déjà remplis</label>
+
+  <details id="bloc-lettre">
+    <summary>Lettre de motivation à coller</summary>
+    <textarea id="lettre" placeholder="Colle ici la lettre générée par /lettre dans Claude Code. Elle sera insérée automatiquement dans le champ « lettre de motivation » du formulaire."></textarea>
+    <button class="secondaire" id="vider-lettre">Vider</button>
+  </details>
+
+  <details>
+    <summary>Copier un champ à la main</summary>
+    <div class="champs" id="liste-champs"></div>
+  </details>
+
+  <div id="resultat"></div>
+
+  <script src="profil-genere.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

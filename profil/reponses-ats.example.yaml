@@ -1,0 +1,67 @@
+# ═══════════════════════════════════════════════════════════════════
+#  REPONSES ATS — gabarit
+#
+#  Copier en `profil/reponses-ats.yaml` (ignore par git).
+#  Ce sont les questions qui reviennent sur tous les formulaires.
+#  Utilise par l'extension navigateur et par la skill /lettre.
+# ═══════════════════════════════════════════════════════════════════
+
+# ─── Champs courts, remplis automatiquement par l'extension ─────────
+champs_courts:
+  titre_poste_actuel: "Intitule du poste actuel ou du dernier diplome"
+  annees_experience: "0"
+  annees_experience_texte: "Description libre de l'experience"
+  niveau_etudes: "Bac+5 / Master (RNCP niveau 7)"
+  preavis: "Aucun"
+  disponibilite: "Immediate"
+  source_candidature: "Site carriere de l'entreprise"
+  besoin_sponsorship_visa: "Non"
+  handicap_rqth: "Non"
+  casier_judiciaire: "Neant"
+
+# ─── Pitchs reutilisables ──────────────────────────────────────────
+pitchs:
+  une_ligne: >
+    Une phrase : formation, experience, ce qui est vise aujourd'hui.
+
+  trois_lignes: >
+    Trois phrases : le parcours, une realisation concrete qui le prouve,
+    et le type de poste recherche.
+
+  presentation_orale: >
+    La version parlee, telle qu'elle serait dite en entretien. Ancrer sur une
+    decision reelle du parcours plutot que sur une liste de competences.
+
+# ─── Questions ouvertes ────────────────────────────────────────────
+questions_ouvertes:
+
+  pourquoi_ce_poste: >
+    [A personnaliser par offre] Ancrer sur un element precis de l'annonce, puis
+    relier a une histoire de histoires.yaml. Jamais de flatterie sur l'entreprise
+    si on ne la connait pas reellement.
+
+  points_forts: >
+    Une qualite, immediatement suivie de l'anecdote qui la prouve.
+
+  points_faibles: >
+    Une limite reelle, et ce qui est fait concretement pour la reduire.
+
+  projet_professionnel: >
+    Ou le poste vise mene, a trois ans.
+
+# ─── Correspondances de champs pour l'extension ────────────────────
+#  Ajouter ici tout champ exotique rencontre sur un ATS : l'extension
+#  le reconnaitra la prochaine fois.
+alias_champs:
+  prenom: [prenom, "first name", firstname, given name, vorname, nombre]
+  nom: [nom, "last name", lastname, surname, family name, nachname]
+  email: [email, courriel, "e-mail", mail]
+  telephone: [telephone, "téléphone", phone, mobile, portable, tel]
+  linkedin: [linkedin, "linkedin profile", "profil linkedin", linkedin url]
+  github: [github, portfolio, "personal website", site web]
+  adresse: [adresse, address, "street address", rue]
+  ville: [ville, city, localite, town]
+  code_postal: [code postal, "postal code", "zip code", cp, zip]
+  pays: [pays, country]
+  salaire: [salaire, "prétentions", pretentions, "salary expectation", "expected salary", remuneration]
+  disponibilite: [disponibilite, "date de disponibilité", "start date", availability, "notice period", preavis]
