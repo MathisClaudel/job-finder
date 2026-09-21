@@ -190,8 +190,51 @@ function remplirOuiNon(groupe, reponse) {
   return false
 }
 
+// ─── Pays du poste (pour le salaire attendu) ───────────────────────
+// Domaines nationaux dont le code ne suit pas l'ISO.
+const TLD_VERS_PAYS = { uk: 'GB' }
+
+/**
+ * Devine le pays du poste : d'abord le lieu affiche par l'ATS, puis le titre
+ * de la page, enfin l'extension du domaine. Les ATS (Workday, Greenhouse,
+ * Lever) sont en .com, d'ou le domaine en dernier recours seulement.
+ */
+function detecterPays() {
+  const tester = (texte) => {
+    const t = sansAccent(texte)
+    if (!t) return null
+    return Object.keys(JF_SALAIRES).find((c) => new RegExp(JF_SALAIRES[c].motif).test(t)) ?? null
+  }
+
+  const lieux = [
+    ...document.querySelectorAll(
+      '[class*="location" i], [data-automation-id*="location" i], [data-qa*="location" i], [itemprop="jobLocation"], [itemprop="addressCountry"]',
+    ),
+  ]
+    .map((el) => el.textContent)
+    .filter((t) => t && t.length < 200)
+  for (const texte of lieux) {
+    const code = tester(texte)
+    if (code) return { code, via: `lieu « ${texte.trim().slice(0, 40)} »` }
+  }
+
+  const parTitre = tester(document.title)
+  if (parTitre) return { code: parTitre, via: 'titre de la page' }
+
+  const tld = location.hostname.split('.').pop()
+  const parTld = TLD_VERS_PAYS[tld] ?? tld.toUpperCase()
+  if (JF_SALAIRES[parTld]) return { code: parTld, via: `domaine .${tld}` }
+
+  return null
+}
+
+function salairePour(pays) {
+  const s = JF_SALAIRES[pays]
+  return s ? String(s.cible) : JF_VALEURS.salaire
+}
+
 // ─── Orchestration ─────────────────────────────────────────────────
-async function remplir({ ecraser = false, lettre = '' } = {}) {
+async function remplir({ ecraser = false, lettre = '', pays = 'FR' } = {}) {
   const champs = [...document.querySelectorAll('input, textarea, select')].filter(estRemplissable)
   const journal = []
   let rempli = 0
@@ -231,7 +274,7 @@ async function remplir({ ecraser = false, lettre = '' } = {}) {
     const regle = REGLES.find((r) => r.motifs.some((m) => m.test(libelle)))
     if (!regle) continue
 
-    const valeur = JF_VALEURS[regle.cle]
+    const valeur = regle.cle === 'salaire' ? salairePour(pays) : JF_VALEURS[regle.cle]
     if (!valeur) continue
 
     const ok = champ.tagName === 'SELECT' ? remplirSelect(champ, valeur) : (ecrire(champ, valeur), true)
@@ -255,6 +298,7 @@ async function remplir({ ecraser = false, lettre = '' } = {}) {
 }
 
 chrome.runtime.onMessage.addListener((msg, _exp, repondre) => {
+  if (msg?.action === 'detecter-pays') return repondre(detecterPays())
   if (msg?.action !== 'remplir') return
   remplir(msg.options ?? {}).then(repondre)
   return true // reponse asynchrone

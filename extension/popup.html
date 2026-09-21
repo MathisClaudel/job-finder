@@ -33,6 +33,11 @@
   #resultat .titre { font-weight:600; color:var(--vert); margin-bottom:6px; }
   #resultat ul { margin:0; padding-left:16px; color:var(--doux); }
   #resultat .alerte { color:var(--jaune); margin-top:8px; }
+  .pays { margin-top:4px; }
+  .pays label { font-size:.8rem; color:var(--doux); display:block; margin-bottom:3px; }
+  .pays select { width:100%; padding:6px 8px; border-radius:7px; border:1px solid var(--trait);
+                 background:var(--carte); color:var(--texte); font:inherit; font-size:.82rem; }
+  #salaire-pays { margin:4px 0 0; font-size:.78rem; color:var(--doux); }
   .champs { margin-top:8px; display:grid; gap:3px; }
   .champs button { display:flex; justify-content:space-between; gap:8px; text-align:left;
                    background:var(--carte); color:var(--texte); border:1px solid var(--trait);
@@ -47,6 +52,12 @@
 
   <button id="remplir">Remplir le formulaire</button>
   <label class="case"><input type="checkbox" id="ecraser"> Écraser aussi les champs déjà remplis</label>
+
+  <div class="pays">
+    <label for="pays">Pays du poste</label>
+    <select id="pays"></select>
+    <p id="salaire-pays"></p>
+  </div>
 
   <details id="bloc-lettre">
     <summary>Lettre de motivation à coller</summary>

@@ -15,6 +15,39 @@ $('#vider-lettre').addEventListener('click', () => {
   chrome.storage.local.remove('lettre')
 })
 
+// ─── Pays du poste : fixe le salaire attendu saisi dans le formulaire ──
+const choixPays = $('#pays')
+const montant = (s) => `${s.cible.toLocaleString('fr-FR')} ${s.devise}`
+const pays = Object.entries(JF_SALAIRES).sort(([, a], [, b]) => a.nom.localeCompare(b.nom, 'fr'))
+for (const [code, s] of pays) choixPays.add(new Option(`${s.nom} — ${montant(s)}`, code))
+choixPays.value = 'FR'
+let origineDetection = 'par defaut'
+
+function afficherSalaire() {
+  const s = JF_SALAIRES[choixPays.value]
+  if (!s) return ($('#salaire-pays').textContent = 'Salaire non renseigne dans profil.yaml')
+  $('#salaire-pays').textContent =
+    `Saisi : ${montant(s)} brut/an (plancher ${s.plancher.toLocaleString('fr-FR')}) · ${origineDetection}`
+}
+choixPays.addEventListener('change', () => {
+  origineDetection = 'choix manuel'
+  afficherSalaire()
+})
+
+chrome.tabs.query({ active: true, currentWindow: true }).then(async ([onglet]) => {
+  try {
+    const trouve = await chrome.tabs.sendMessage(onglet.id, { action: 'detecter-pays' }, { frameId: 0 })
+    if (trouve && JF_SALAIRES[trouve.code]) {
+      choixPays.value = trouve.code
+      origineDetection = `detecte via ${trouve.via}`
+    }
+  } catch {
+    // Page sans script de contenu (chrome://, store...) : on reste sur la France.
+  }
+  afficherSalaire()
+})
+afficherSalaire()
+
 // ─── Champs copiables : utile pour les ATS exotiques ───────────────
 const liste = $('#liste-champs')
 for (const [cle, valeur] of Object.entries(JF_VALEURS)) {
@@ -52,7 +85,7 @@ $('#remplir').addEventListener('click', async () => {
         onglet.id,
         {
           action: 'remplir',
-          options: { ecraser: $('#ecraser').checked, lettre: $('#lettre').value },
+          options: { ecraser: $('#ecraser').checked, lettre: $('#lettre').value, pays: choixPays.value },
         },
         { frameId },
       )

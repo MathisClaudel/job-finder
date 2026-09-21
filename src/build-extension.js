@@ -6,6 +6,7 @@
 import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { ROOT, chargerProfil, chargerReponsesAts } from './config.js'
+import { MARCHES, salairesParPays } from './salaires-pays.js'
 
 const profil = chargerProfil()
 const ats = chargerReponsesAts()
@@ -80,10 +81,15 @@ const VIDES_ATTENDUS = new Set(
   ].filter(Boolean),
 )
 
+// Salaire attendu pour chaque pays : l'extension choisit selon le poste vise.
+const salaires = vide(rech.salaire?.brut_annuel_cible) ? {} : salairesParPays(rech.salaire)
+for (const [code, s] of Object.entries(salaires)) s.motif = MARCHES[code][3].source
+
 const sortie = `// Genere automatiquement par 'npm run build:extension' — ne pas editer a la main.
 // Source : profil/profil.yaml et profil/reponses-ats.yaml
 // Genere le ${new Date().toISOString()}
 var JF_VALEURS = ${JSON.stringify(valeurs, null, 2)};
+var JF_SALAIRES = ${JSON.stringify(salaires)};
 var JF_ALIAS = ${JSON.stringify(ats.alias_champs ?? {}, null, 2)};
 `
 
