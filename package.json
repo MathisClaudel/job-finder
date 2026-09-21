@@ -12,7 +12,14 @@
     "show": "node src/cli.js show",
     "status": "node src/cli.js status",
     "report": "node src/cli.js report",
-    "build:extension": "node src/build-extension.js"
+    "build:extension": "node src/build-extension.js",
+    "cv": "node src/cli.js cv",
+    "app": "node src/serveur.js",
+    "sante": "node src/cli.js sante",
+    "dedoublonner": "node src/cli.js dedoublonner",
+    "reparer": "node src/cli.js reparer",
+    "disponibilite": "node src/cli.js disponibilite",
+    "candidatures": "node src/cli.js candidatures"
   },
   "dependencies": {
     "yaml": "^2.5.1"
