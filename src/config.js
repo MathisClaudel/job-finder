@@ -47,6 +47,12 @@ export function chargerReponsesAts() {
   return lireProfil('reponses-ats') ?? {}
 }
 
+export function chargerCv() {
+  const cv = lireProfil('cv')
+  if (!cv) throw new Error('profil/cv.yaml introuvable — copier profil/cv.example.yaml')
+  return cv
+}
+
 const sansAccent = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '')
 
 /**

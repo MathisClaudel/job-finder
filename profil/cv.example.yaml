@@ -1,0 +1,102 @@
+# ═══════════════════════════════════════════════════════════════════
+#  CV — banque de formulations ciblables (GABARIT)
+#
+#  Copier en `profil/cv.yaml` et remplir. Le fichier reel n'est jamais
+#  versionne : il contient le parcours complet.
+#
+#  Principe : le generateur ne redige rien. Il selectionne et ordonne
+#  des phrases ecrites ici a la main, donc verifiables et defendables
+#  en entretien. Une puce absente de ce fichier n'apparaitra jamais
+#  sur un CV.
+#
+#  Chaque element ciblable porte :
+#    axes     — familles de poste ou il est pertinent
+#    poids    — priorite de base 0-10, quand l'annonce ne departage pas
+#    motscles — termes cherches dans l'annonce ; chacun fait remonter
+#               l'element (plafonne, pour qu'une annonce fourre-tout
+#               ne fasse pas remonter n'importe quoi)
+#
+#  Axes reconnus par src/cv/ciblage.js :
+#    ia · dotnet · fullstack · data · devops · qualite · management · cloud
+# ═══════════════════════════════════════════════════════════════════
+
+# Titre affiche sous le nom. Une entree par axe, plus `defaut`.
+# Version anglaise (`npm run cv -- <id> --langue en`) : chaque champ texte
+# peut avoir un jumeau `_en` (texte_en, poste_en, groupe_en, nom_en...), et
+# `titres_en` / `accroches_en` doublent les blocs par axe. Un champ sans
+# jumeau reste en francais et la commande le signale.
+titres:
+  ia: Ingenieur IA — <positionnement en cinq mots>
+  dotnet: Ingenieur logiciel .NET / C# — <positionnement>
+  defaut: <titre generique>
+
+# Accroche : deux a trois phrases factuelles. Pas de citation inspirante,
+# pas d'adjectif non prouve par une ligne du CV.
+accroches:
+  ia: >
+    <Qui tu es en une phrase, avec un chiffre>. <Ce que tu cherches, en une phrase>.
+  defaut: >
+    <version generique>
+
+experiences:
+  - id: <identifiant-court>
+    poste: <intitule exact>
+    entreprise: <employeur>
+    lieu: <ville>
+    debut: 2025-09          # format AAAA-MM, converti en "Sept. 2025" au rendu
+    fin: 2026-09            # omettre pour "aujourd'hui"
+    contexte: <une ligne de contexte : taille, secteur, role de l'equipe>
+    max_puces: 5            # nombre de puces retenues pour cette experience
+    puces:
+      - texte: >-
+          <Verbe d'action au passe> <ce qui a ete fait> <resultat chiffre si possible>.
+        axes: [ia, management]
+        poids: 10
+        motscles: [<termes qui declenchent cette puce dans une annonce>]
+      - texte: >-
+          <une autre formulation du meme poste, pour un autre type d'offre>
+        axes: [dotnet]
+        poids: 8
+        motscles: []
+
+projets:
+  - id: <identifiant-court>
+    nom: <nom du projet>
+    lien: <url publique, ou "">
+    texte: >-
+      <ce que fait le projet, et ce que tu y as construit>
+    axes: [ia]
+    poids: 10
+    motscles: []
+
+# `niveau` (sur 5) est une auto-evaluation. Ne jamais lister ici une
+# competence qui ne tiendrait pas dix minutes d'entretien technique.
+competences:
+  - groupe: <nom du groupe>
+    axes: [ia]
+    poids: 10
+    items:
+      - {nom: <competence>, niveau: 3, motscles: [<termes>]}
+      - {nom: <competence sans auto-evaluation>, motscles: []}
+
+formation:
+  - diplome: <intitule>
+    etablissement: <etablissement>
+    lieu: <ville>
+    periode: 2024 – 2026
+    detail_ia: <version du detail affichee sur les axes ia et data>
+    detail: <version affichee sur les autres axes>
+
+certifications:
+  - {nom: <certification>, annee: 2026, axes: [cloud]}
+
+langues:
+  - {nom: <langue>, niveau: <niveau et sa preuve>}
+
+# Une seule entree : celle qui apporte quelque chose qu'aucune experience
+# professionnelle ne montre.
+engagement:
+  titre: <role>
+  periode: 2026 – 2027
+  texte: >-
+    <ce que tu y fais, avec la taille de l'equipe>
