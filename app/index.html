@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Job Finder</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="barre">
+  <div class="marque">Job&nbsp;Finder</div>
+  <nav class="onglets" id="onglets">
+    <button class="onglet actif" data-vue="afaire">À faire <span class="pastille" id="pastille-afaire"></span></button>
+    <button class="onglet" data-vue="tri">Tri <span class="pastille" id="pastille-tri"></span></button>
+    <button class="onglet" data-vue="kanban">Kanban</button>
+    <button class="onglet" data-vue="tableau">Tableau</button>
+    <button class="onglet" data-vue="candidatures">Candidatures <span class="pastille" id="pastille-candidatures"></span></button>
+  </nav>
+  <div class="actions">
+    <button class="btn" data-cmd="search">Chercher</button>
+    <button class="btn fantome" data-cmd="sante">Vérifier les sources</button>
+    <button class="btn fantome" data-cmd="disponibilite">Vérifier les liens</button>
+    <button class="btn fantome" data-cmd="report">Rapport</button>
+    <button class="btn fantome" data-cmd="extension">Extension</button>
+  </div>
+</header>
+
+<main id="vues">
+  <section class="vue" id="vue-afaire"></section>
+  <section class="vue cachee" id="vue-tri"></section>
+  <section class="vue cachee" id="vue-kanban"></section>
+  <section class="vue cachee" id="vue-tableau"></section>
+  <section class="vue cachee" id="vue-candidatures"></section>
+</main>
+
+<aside class="panneau cachee" id="panneau" aria-label="Détail de l'offre"></aside>
+<div class="voile cachee" id="voile"></div>
+
+<section class="console cachee" id="console">
+  <div class="console-tete">
+    <strong id="console-titre">Console</strong>
+    <button class="btn fantome petit" id="console-fermer">Fermer</button>
+  </div>
+  <pre id="console-log"></pre>
+</section>
+
+<div class="toast cachee" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
