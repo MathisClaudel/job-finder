@@ -7,6 +7,7 @@
 # versionnes : seuls les gabarits *.example.yaml le sont.
 profil/*.yaml
 !profil/*.example.yaml
+profil/photo.*
 extension/profil-genere.js
 
 # Lettres generees : elles contiennent le nom et le parcours.
@@ -20,3 +21,5 @@ data/
 node_modules/
 *.log
 .DS_Store
+# Sorties generees par npm run cv (a la racine seulement : src/cv/ est du code).
+/cv/
