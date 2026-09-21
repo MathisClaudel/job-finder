@@ -208,17 +208,38 @@ const SOURCES = [
 ]
 
 /** Interroge les 7 sources en parallele ; une source en panne n'arrete pas les autres. */
-export async function chercher({ journal = console } = {}) {
-  const resultats = await Promise.allSettled(SOURCES.map(([, fn]) => fn()))
+export async function chercher({ journal = console, rapport } = {}) {
+  // Chaque source est chronometree separement : une panne doit pouvoir etre
+  // attribuee a un fournisseur precis, pas au bloc "remote" dans son ensemble.
+  const debuts = SOURCES.map(() => Date.now())
+  const resultats = await Promise.allSettled(
+    SOURCES.map(([, fn], i) => {
+      debuts[i] = Date.now()
+      return fn()
+    }),
+  )
   const offres = new Map()
 
   resultats.forEach((r, i) => {
     const nom = SOURCES[i][0]
+    const ms = Date.now() - debuts[i]
     if (r.status === 'rejected') {
       journal.log(`  ${nom} : indisponible — ${r.reason.message}`)
+      rapport?.enregistrer(nom, {
+        etat: 'echec',
+        offres: 0,
+        ms,
+        message: r.reason.message.slice(0, 300),
+      })
       return
     }
     for (const o of r.value) if (!offres.has(o.id)) offres.set(o.id, o)
+    rapport?.enregistrer(nom, {
+      etat: r.value.length ? 'ok' : 'vide',
+      offres: r.value.length,
+      ms,
+      message: r.value.length ? null : 'La source a répondu sans ramener aucune offre',
+    })
     journal.log(`  ${nom} : ${r.value.length} offres`)
   })
 

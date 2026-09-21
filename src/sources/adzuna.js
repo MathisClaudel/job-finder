@@ -28,14 +28,18 @@ function normaliser(offre, pays) {
  * Deux passes : autour de la ville cible (rayon geographique) puis les offres
  * explicitement remote en France.
  */
-export async function chercher({ rayonKm, journal = console } = {}) {
+export async function chercher({ rayonKm, journal = console, rapport } = {}) {
   const zone = zoneLocale()
   rayonKm ??= zone.rayonKm
   if (!env.adzuna.actif) {
     journal.log('  Adzuna : ignoree (cles absentes dans .env)')
+    rapport?.ignorer('Adzuna', 'Clés absentes dans .env')
     return []
   }
 
+  const debut = Date.now()
+  let echecs = 0
+  let dernierEchec = null
   const resultats = new Map()
   const passes = [
     { where: zone.ville, distance: rayonKm, libelle: zone.ville },
@@ -50,8 +54,9 @@ export async function chercher({ rayonKm, journal = console } = {}) {
         results_per_page: '50',
         what,
         where: passe.where,
-        content_type: 'application/json',
       })
+      // Surtout pas de content_type ici : URLSearchParams encode le slash en %2F,
+      // et l'API Adzuna rejette la requete entiere avec un 400 muet.
       if (passe.distance) params.set('distance', String(passe.distance))
       if (passe.remoteSeulement) params.set('what_or', 'teletravail remote distanciel')
 
@@ -63,12 +68,23 @@ export async function chercher({ rayonKm, journal = console } = {}) {
           if (!resultats.has(n.id)) resultats.set(n.id, n)
         }
       } catch (err) {
+        echecs++
+        dernierEchec = err.message
         journal.log(`  Adzuna [${passe.libelle} / "${what}"] : ${err.message}`)
       }
       await pause(300)
     }
   }
 
+  const total = passes.length * REQUETES.fr.length
+  rapport?.enregistrer('Adzuna', {
+    etat: echecs === total ? 'echec' : resultats.size ? 'ok' : 'vide',
+    offres: resultats.size,
+    ms: Date.now() - debut,
+    message: echecs
+      ? `${echecs}/${total} requêtes en échec — ${String(dernierEchec).slice(0, 200)}`
+      : null,
+  })
   journal.log(`  Adzuna : ${resultats.size} offres`)
   return [...resultats.values()]
 }

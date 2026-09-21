@@ -15,7 +15,12 @@ export async function getJson(url, options = {}) {
       const corps = await rep.text().catch(() => '')
       throw new Error(`HTTP ${rep.status} sur ${new URL(url).host} — ${corps.slice(0, 160)}`)
     }
-    return await rep.json()
+    // France Travail repond 204 avec un corps vide quand la requete ne ramene
+    // rien. C'est un resultat vide, pas une panne : le signaler comme une erreur
+    // masquerait les vraies.
+    const texte = await rep.text()
+    if (!texte.trim()) return null
+    return JSON.parse(texte)
   } finally {
     clearTimeout(timer)
   }
